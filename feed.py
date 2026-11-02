@@ -514,8 +514,8 @@ def main():
             if backfill:
                 # 테스트 때 이미 보낸 최신 글(posts[-1])은 빼고 보냄
                 to_send = [x for x in posts[:-1] if x["ts"] and backfill[1] <= x["ts"] < backfill[2]]
-            elif SEND_LATEST and posts:
-                to_send = [posts[-1]]
+            elif SEND_LATEST and new_account and posts:
+                to_send = [posts[-1]]  # 테스트: 처음 연결된 계정만 최신 글 1개
             elif new_account:
                 to_send = []  # 처음 보는 계정: 기존 글은 보내지 않고 기억만
             else:
