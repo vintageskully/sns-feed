@@ -23,7 +23,7 @@ WARN_AFTER_FAILS = 6              # 연속 6번(약 3시간) 실패하면 텔레
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36")
 
-TG_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+TG_TOKEN = re.sub(r"^bot", "", os.environ.get("TELEGRAM_BOT_TOKEN", "").strip().strip("'\"").strip())
 TG_CHAT = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
 X_COOKIES = os.environ.get("X_COOKIES", "").strip()
 FB_COOKIES = os.environ.get("FB_COOKIES", "").strip()
@@ -197,6 +197,9 @@ def find_channel(state):
         log("채널 찾기 실패:", e)
         return
     if not r.get("ok"):
+        if r.get("error_code") in (401, 404):
+            sys.exit("봇 토큰이 틀렸거나 폐기됨 — @BotFather에서 토큰을 다시 복사해 "
+                     "TELEGRAM_BOT_TOKEN 값을 고쳐주세요 (" + str(r.get("description")) + ")")
         log("텔레그램 응답 오류(다른 프로그램이 이 봇을 쓰는 중일 수 있음):", r)
     chats = [(upd.get("my_chat_member") or upd.get("channel_post") or upd.get("message") or {})
              .get("chat", {}) for upd in r.get("result", [])]
