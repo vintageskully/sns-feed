@@ -23,13 +23,22 @@
   "threads:withyoori": 0,
   "threads:writer92tothemoney": 0,
   "threads:yu_dong7": 0,
-  "x:DanZanger": 6,
-  "x:MarkRitchie_II": 6,
-  "x:ReturnDriver": 6,
-  "x:aleabitoreddit": 6,
-  "x:dryan310": 6,
-  "x:markminervini": 6,
-  "x:monsterstocks1": 6
+  "x:DanZanger": 7,
+  "x:MarkRitchie_II": 7,
+  "x:ReturnDriver": 7,
+  "x:aleabitoreddit": 7,
+  "x:dryan310": 7,
+  "x:markminervini": 7,
+  "x:monsterstocks1": 7
+ },
+ "last_error": {
+  "x:DanZanger": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
+  "x:MarkRitchie_II": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
+  "x:ReturnDriver": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
+  "x:aleabitoreddit": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
+  "x:dryan310": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
+  "x:markminervini": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
+  "x:monsterstocks1": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]"
  },
  "seen": {
   "facebook:100012191809083": [
@@ -340,7 +349,8 @@
    "4021272196677158644",
    "4021274537216222307",
    "4021288143731328743",
-   "4021288842837922478"
+   "4021288842837922478",
+   "4021445890791721428"
   ],
   "x:MarkRitchie_II": [
    "1885377395214999846",
