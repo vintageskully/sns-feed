@@ -481,6 +481,29 @@ def fetch_facebook(ctx, acc):
     return list(posts.values())
 
 
+def send_digest(items, now):
+    """밤사이 글을 시간순으로 묶어서, 텔레그램 길이 제한(4096자)에 맞게 나눠 보냄."""
+    if not items:
+        log("밤사이 새 글 없음")
+        return
+    items.sort(key=lambda ap: ap[1].get("ts") or 0)
+    head = f"🌙 밤사이 새 글 {len(items)}개 (어젯밤 11:30 ~ {now:%H:%M})"
+    sep = "\n\n━━━━━━━━━━\n\n"
+    chunks, cur = [], head
+    for i, (acc, post) in enumerate(items, 1):
+        entry = f"[{i}/{len(items)}] " + format_post(acc, post)
+        if len(entry) > 4000:
+            entry = entry[:3990] + "…"
+        if len(cur) + len(sep) + len(entry) > 4096:
+            chunks.append(cur)
+            cur = entry
+        else:
+            cur += sep + entry
+    chunks.append(cur)
+    for c in chunks:
+        tg_send(c)
+
+
 # ---------------------------------------------------------------- 메인
 
 def main():
@@ -502,6 +525,11 @@ def main():
         log("지난 글 다시 받기:", backfill[0])
     summary = {}
     errors = []
+    # 새벽 5시~7시 사이 그날 첫 실행이면 밤사이 글을 한 번에 묶어서 보냄
+    today = now.strftime("%Y-%m-%d")
+    digest_mode = (5 <= now.hour < 7 and state.get("digest_date") != today
+                   and not backfill and not SEND_LATEST)
+    digest = []
 
     with sync_playwright() as p:
         launch_args = ["--disable-blink-features=AutomationControlled"]
@@ -562,7 +590,10 @@ def main():
 
             log(f"[성공] {key}: {len(posts)}개 확인, 새 글 {len(to_send)}개")
             for post in to_send:
-                if tg_send(format_post(acc, post)):
+                if digest_mode:
+                    digest.append((acc, post))
+                    seen.add(post["id"])
+                elif tg_send(format_post(acc, post)):
                     seen.add(post["id"])
             seen.update(x["id"] for x in posts if x not in to_send)
             # 최근 것만 기억(파일 크기 제한)
@@ -570,6 +601,11 @@ def main():
             save_state(state)
 
         browser.close()
+
+    if digest_mode:
+        send_digest(digest, now)
+        state["digest_date"] = today
+        save_state(state)
 
     if backfill:
         state["backfill_done"] = backfill[0]
