@@ -27,6 +27,7 @@ if PC_MODE and os.path.exists(PC_CONFIG):
         _cfg = json.load(open(PC_CONFIG, encoding="utf-8"))
         os.environ.setdefault("TELEGRAM_BOT_TOKEN", _cfg.get("token", ""))
         os.environ.setdefault("TELEGRAM_CHAT_ID", str(_cfg.get("chat_id", "")))
+        os.environ.setdefault("X_COOKIES", _cfg.get("x_cookies", ""))
     except Exception:
         pass
 MAX_AGE = timedelta(days=3)       # 이보다 오래된 글(고정 글 등)은 보내지 않음
@@ -567,7 +568,7 @@ def main():
         ctxs = {}
 
         def ctx_for(platform):
-            if PC_MODE and platform == "x" and "x" not in ctxs:
+            if PC_MODE and platform == "x" and "x" not in ctxs and not X_COOKIES:
                 ctxs["x"] = p.chromium.launch_persistent_context(
                     X_PROFILE_DIR, headless=True, user_agent=UA, locale="ko-KR",
                     timezone_id="Asia/Seoul", viewport={"width": 1280, "height": 900},

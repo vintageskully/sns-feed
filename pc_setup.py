@@ -32,9 +32,27 @@ else:
     cfg["token"] = tok
     json.dump(cfg, open(cfg_path, "w", encoding="utf-8"))
 
-step("3/5 X 로그인 (창이 열리면 로그인하고, 끝나면 그 창을 닫으세요)")
+step("3/5 X 로그인 정보(쿠키) 가져오기")
+if cfg.get("x_cookies"):
+    print("  이미 저장된 X 쿠키를 사용합니다. (바꾸려면 pc_config.json 을 지우고 다시 실행)")
+else:
+    print("  ① 평소 쓰는 크롬에서 x.com 을 엽니다 (로그인된 상태).")
+    print("  ② Cookie-Editor 아이콘 → Export → JSON 을 누릅니다 (자동으로 복사됨).")
+    while True:
+        input("  ③ 복사했으면 이 창으로 돌아와 Enter: ")
+        clip = subprocess.run(["powershell", "-NoProfile", "-Command", "Get-Clipboard -Raw"],
+                              capture_output=True, text=True, encoding="utf-8").stdout.strip()
+        try:
+            names = [c.get("name") for c in json.loads(clip)]
+        except Exception:
+            names = []
+        if "auth_token" in names:
+            cfg["x_cookies"] = clip
+            json.dump(cfg, open(cfg_path, "w", encoding="utf-8"))
+            print("  X 쿠키 저장 완료 (이 PC에만 저장됨)")
+            break
+        print("  복사된 내용이 X 쿠키가 아니에요. x.com 탭에서 Export → JSON 을 다시 눌러주세요.")
 env = dict(os.environ, PC_MODE="1")
-subprocess.run([py, "feed.py", "login"], env=env, check=True)
 
 step("4/5 30분마다 자동 실행 + PC 켤 때 자동 실행 등록")
 run(["schtasks", "/create", "/f", "/tn", "SNS-X-Feed", "/sc", "minute", "/mo", "30",
