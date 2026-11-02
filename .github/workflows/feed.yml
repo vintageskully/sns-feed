@@ -6,6 +6,8 @@ on:
     - cron: "3,33 20-23 * * *"
     - cron: "3,33 0-13 * * *"
     - cron: "3 14 * * *"
+  push:
+    paths: ["test-run.txt"]   # 이 파일을 바꾸면 테스트 실행
   workflow_dispatch:
     inputs:
       send_latest:
@@ -47,8 +49,8 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           X_COOKIES: ${{ secrets.X_COOKIES }}
           FB_COOKIES: ${{ secrets.FB_COOKIES }}
-          SEND_LATEST: ${{ inputs.send_latest }}
-          IGNORE_QUIET: ${{ inputs.ignore_quiet }}
+          SEND_LATEST: ${{ github.event_name == 'push' || inputs.send_latest }}
+          IGNORE_QUIET: ${{ github.event_name == 'push' || inputs.ignore_quiet }}
         run: python feed.py
 
       - name: Save state
