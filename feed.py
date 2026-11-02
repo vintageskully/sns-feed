@@ -29,6 +29,23 @@ X_COOKIES = os.environ.get("X_COOKIES", "").strip()
 FB_COOKIES = os.environ.get("FB_COOKIES", "").strip()
 SEND_LATEST = os.environ.get("SEND_LATEST", "").lower() == "true"
 IGNORE_QUIET = os.environ.get("IGNORE_QUIET", "").lower() == "true"
+BACKFILL_FILE = "backfill.txt"   # 예: "2026-11-02 07:00 ~ 2026-11-02 11:00" (한국 시간)
+
+
+def read_backfill(state):
+    """지난 시간대 글 다시 받기. 같은 내용은 한 번만 실행."""
+    try:
+        raw = open(BACKFILL_FILE, encoding="utf-8").read().strip()
+    except FileNotFoundError:
+        return None
+    if not raw or state.get("backfill_done") == raw:
+        return None
+    m = re.findall(r"(\d{4}-\d{2}-\d{2})\s+(\d{1,2}:\d{2})", raw)
+    if len(m) != 2:
+        log("backfill.txt 형식 오류:", raw)
+        return None
+    a, b = [datetime.strptime(f"{d} {t}", "%Y-%m-%d %H:%M").replace(tzinfo=KST).timestamp() for d, t in m]
+    return raw, a, b
 
 
 # ---------------------------------------------------------------- 공통
@@ -446,6 +463,9 @@ def main():
     if not TG_CHAT:
         sys.exit("텔레그램 채널을 찾지 못해 중단합니다.")
     first_run = not state["seen"]
+    backfill = read_backfill(state)
+    if backfill:
+        log("지난 글 다시 받기:", backfill[0])
     summary = {}
     errors = []
 
@@ -491,7 +511,10 @@ def main():
             posts.sort(key=lambda x: x["ts"] or 0)
             cutoff = (now - MAX_AGE).timestamp()
 
-            if SEND_LATEST and posts:
+            if backfill:
+                # 테스트 때 이미 보낸 최신 글(posts[-1])은 빼고 보냄
+                to_send = [x for x in posts[:-1] if x["ts"] and backfill[1] <= x["ts"] < backfill[2]]
+            elif SEND_LATEST and posts:
                 to_send = [posts[-1]]
             elif new_account:
                 to_send = []  # 처음 보는 계정: 기존 글은 보내지 않고 기억만
@@ -509,7 +532,12 @@ def main():
 
         browser.close()
 
-    if first_run or SEND_LATEST:
+    if backfill:
+        state["backfill_done"] = backfill[0]
+        save_state(state)
+        tg_send(f"📥 {backfill[0]} 사이 글 다시 보내기 완료")
+
+    if (first_run or SEND_LATEST) and not backfill:
         lines = [f"✅ SNS 알림 설정 완료 ({now:%m/%d %H:%M})"]
         for pf, (ok, total) in summary.items():
             lines.append(f"{ICON[pf]}: {ok}/{total} 계정 수집 성공")
