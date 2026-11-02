@@ -563,6 +563,7 @@ def main():
                 log(f"[실패] {key}: {msg}")
                 errors.append(f"{key}: {msg}")
                 state["fails"][key] = state["fails"].get(key, 0) + 1
+                state.setdefault("last_error", {})[key] = f"{now:%m/%d %H:%M} {msg}"
                 if state["fails"][key] >= WARN_AFTER_FAILS and not state["warned"].get(key):
                     tg_send(f"⚠️ {key} 글을 {state['fails'][key]}번 연속 못 가져왔어요.\n이유: {msg}")
                     state["warned"][key] = True
@@ -572,6 +573,7 @@ def main():
 
             summary[acc["platform"]] = (ok_count + 1, total + 1)
             state["fails"][key] = 0
+            state.setdefault("last_error", {}).pop(key, None)
             state["warned"].pop(key, None)
             seen = set(state["seen"].get(key, []))
             new_account = key not in state["seen"]
