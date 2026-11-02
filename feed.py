@@ -190,19 +190,25 @@ def find_channel(state):
         return
     try:
         r = requests.get(f"https://api.telegram.org/bot{TG_TOKEN}/getUpdates",
-                         params={"allowed_updates": json.dumps(["my_chat_member", "channel_post"])},
+                         params={"allowed_updates": json.dumps(
+                             ["my_chat_member", "channel_post", "message"])},
                          timeout=30).json()
     except Exception as e:
         log("채널 찾기 실패:", e)
         return
-    for upd in reversed(r.get("result", [])):
-        chat = (upd.get("my_chat_member") or upd.get("channel_post") or {}).get("chat", {})
-        if chat.get("type") == "channel":
-            TG_CHAT = str(chat["id"])
-            state["chat_id"] = TG_CHAT
-            log("채널 자동 인식:", chat.get("title"))
-            return
-    log("채널을 못 찾음 — 봇을 채널 관리자로 추가한 뒤 채널에 아무 글이나 하나 올려주세요")
+    if not r.get("ok"):
+        log("텔레그램 응답 오류(다른 프로그램이 이 봇을 쓰는 중일 수 있음):", r)
+    chats = [(upd.get("my_chat_member") or upd.get("channel_post") or upd.get("message") or {})
+             .get("chat", {}) for upd in r.get("result", [])]
+    # 채널을 우선, 없으면 봇과의 1:1 대화방이나 그룹
+    for kind in ("channel", "supergroup", "group", "private"):
+        for chat in reversed(chats):
+            if chat.get("type") == kind:
+                TG_CHAT = str(chat["id"])
+                state["chat_id"] = TG_CHAT
+                log("받을 곳 자동 인식:", kind, chat.get("title") or chat.get("first_name"))
+                return
+    log("받을 곳을 못 찾음 — 채널(봇이 관리자)이나 봇 대화방에 아무 글이나 하나 올려주세요")
 
 
 def tg_send(text):
