@@ -46,6 +46,8 @@ BACKFILL_FILE = "backfill.txt"   # 예: "2026-11-02 07:00 ~ 2026-11-02 11:00" (�
 
 def read_backfill(state):
     """지난 시간대 글 다시 받기. 같은 내용은 한 번만 실행."""
+    if PC_MODE:
+        return None
     try:
         raw = open(BACKFILL_FILE, encoding="utf-8").read().strip()
     except FileNotFoundError:
