@@ -363,29 +363,63 @@ def fetch_x(ctx, acc):
             raise RuntimeError(f"X 비로그인 조회 실패(HTTP {r.status_code}) — X_COOKIES 필요")
         posts = extract_x([json.loads(m.group(1))], acc["handle"])
     else:
-        blobs = []
+        blobs, ops = [], []
         page = ctx.new_page()
 
         def on_resp(resp):
-            if "/graphql/" in resp.url and "UserTweets" in resp.url:
+            if "/graphql/" in resp.url:
+                op = resp.url.split("?")[0].rstrip("/").split("/")[-1]
+                ops.append(f"{op}:{resp.status}")
                 try:
                     blobs.append(resp.json())
                 except Exception:
                     pass
 
         page.on("response", on_resp)
+        dom_posts = []
         try:
-            page.goto(acc["url"], wait_until="domcontentloaded", timeout=45000)
-            for _ in range(20):
-                if blobs:
-                    break
-                page.wait_for_timeout(500)
-            page.wait_for_timeout(1500)
+            page.goto(acc["url"], wait_until="domcontentloaded", timeout=60000)
+            try:
+                page.wait_for_selector('article[data-testid="tweet"]', timeout=25000)
+            except Exception:
+                pass
+            page.wait_for_timeout(2000)
+            page.mouse.wheel(0, 2500)
+            page.wait_for_timeout(2500)
             if "/login" in page.url or "/i/flow" in page.url:
                 raise RuntimeError("X 로그인 풀림 — X_COOKIES 다시 등록 필요")
+            # 화면에 보이는 글에서 직접 읽기(예비용)
+            dom_posts = page.evaluate("""() => [...document.querySelectorAll('article[data-testid="tweet"]')].map(a => {
+                const t = a.querySelector('time');
+                const link = t ? t.closest('a') : a.querySelector('a[href*="/status/"]');
+                const txt = a.querySelector('[data-testid="tweetText"]');
+                return {href: link ? link.getAttribute('href') : '', dt: t ? t.getAttribute('datetime') : '',
+                        text: txt ? txt.innerText : ''};
+            })""")
+            title = page.title()
+            logged_out = page.locator('[data-testid="loginButton"], a[href="/login"]').count() > 0
         finally:
             page.close()
         posts = extract_x(blobs, acc["handle"])
+        if not posts:
+            seen_ids = set()
+            for d in dom_posts:
+                m = re.match(r"^/([^/]+)/status/(\d+)", d.get("href") or "")
+                if not m or m.group(1).lower() != acc["handle"].lower() or m.group(2) in seen_ids:
+                    continue
+                seen_ids.add(m.group(2))
+                ts = None
+                if d.get("dt"):
+                    ts = int(datetime.fromisoformat(d["dt"].replace("Z", "+00:00")).timestamp())
+                posts.append({"id": m.group(2), "text": d.get("text", ""), "ts": ts,
+                              "author": "@" + m.group(1),
+                              "url": f"https://x.com/{m.group(1)}/status/{m.group(2)}"})
+        if not posts:
+            if logged_out:
+                raise RuntimeError("X 로그인 안 됨 — x.com 탭에서 쿠키를 다시 Export 해주세요")
+            raise RuntimeError(f"글을 찾지 못함 [제목:{title[:40]} / 응답:{','.join(ops[:6]) or '없음'}"
+                               f" / 화면글:{len(dom_posts)}]")
+        return posts
     if not posts:
         raise RuntimeError("글을 찾지 못함")
     return posts
@@ -470,7 +504,12 @@ def main():
     errors = []
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(args=["--disable-blink-features=AutomationControlled"])
+        launch_args = ["--disable-blink-features=AutomationControlled"]
+        try:
+            # 일반 크롬과 더 비슷한 방식(자동화 감지를 덜 당함)
+            browser = p.chromium.launch(channel="chromium", args=launch_args)
+        except Exception:
+            browser = p.chromium.launch(args=launch_args)
         ctxs = {}
 
         def ctx_for(platform):
