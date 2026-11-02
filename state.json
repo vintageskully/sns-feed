@@ -4,20 +4,20 @@
  "digest_date": "2026-11-03",
  "fails": {
   "facebook:100012191809083": 0,
-  "facebook:huckjin.kwon": 1,
-  "facebook:jiho.yoon.7547": 1,
-  "threads:amisyoori": 1,
+  "facebook:huckjin.kwon": 0,
+  "facebook:jiho.yoon.7547": 0,
+  "threads:amisyoori": 0,
   "threads:dokiusstock": 0,
   "threads:dontstopinvest": 0,
-  "threads:eunice_bbu": 1,
+  "threads:eunice_bbu": 0,
   "threads:fit.ttok": 0,
   "threads:ji_ni_su_": 0,
-  "threads:jkimmorgan": 1,
-  "threads:joo___wol2": 1,
+  "threads:jkimmorgan": 0,
+  "threads:joo___wol2": 0,
   "threads:jwlee090": 0,
   "threads:kurtsaltrichter": 0,
-  "threads:myp_240": 1,
-  "threads:peterleejoa": 1,
+  "threads:myp_240": 0,
+  "threads:peterleejoa": 0,
   "threads:raimund_korea": 0,
   "threads:trader_coink": 0,
   "threads:trader_yul": 0,
@@ -33,14 +33,6 @@
   "x:monsterstocks1": 7
  },
  "last_error": {
-  "facebook:huckjin.kwon": "11/03 05:37 페이스북 로그인 풀림/보안확인 — FB_COOKIES 다시 등록 필요",
-  "facebook:jiho.yoon.7547": "11/03 05:37 페이스북 로그인 풀림/보안확인 — FB_COOKIES 다시 등록 필요",
-  "threads:amisyoori": "11/03 05:37 Page.goto: net::ERR_HTTP_RESPONSE_CODE_FAILURE at https://www.threads.com/@amisyoori",
-  "threads:eunice_bbu": "11/03 05:37 Page.goto: net::ERR_HTTP_RESPONSE_CODE_FAILURE at https://www.threads.com/@eunice_bbu",
-  "threads:jkimmorgan": "11/03 05:37 Page.goto: net::ERR_HTTP_RESPONSE_CODE_FAILURE at https://www.threads.com/@jkimmorgan",
-  "threads:joo___wol2": "11/03 05:37 Page.goto: net::ERR_HTTP_RESPONSE_CODE_FAILURE at https://www.threads.com/@joo___wol2",
-  "threads:myp_240": "11/03 05:37 Page.goto: net::ERR_HTTP_RESPONSE_CODE_FAILURE at https://www.threads.com/@myp_240",
-  "threads:peterleejoa": "11/03 05:37 Page.goto: net::ERR_HTTP_RESPONSE_CODE_FAILURE at https://www.threads.com/@peterleejoa",
   "x:DanZanger": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:MarkRitchie_II": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:ReturnDriver": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
@@ -49,7 +41,7 @@
   "x:markminervini": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:monsterstocks1": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]"
  },
- "last_run": 1793651875,
+ "last_run": 1793655366,
  "seen": {
   "facebook:100012191809083": [
    "1774135789669464",
@@ -149,7 +141,9 @@
    "4021183333761931124",
    "4021226547264672094",
    "4021283030387921004",
-   "4021313368082363306"
+   "4021313368082363306",
+   "4021598539734388820",
+   "4021608268833609747"
   ],
   "threads:dokiusstock": [
    "4018418285313921774",
