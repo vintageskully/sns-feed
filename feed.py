@@ -202,13 +202,36 @@ def needs_translation(text):
     return hangul < len(letters) * 0.1 and latin > len(letters) * 0.5
 
 
+def _tr_google_direct(text):
+    r = requests.get("https://translate.googleapis.com/translate_a/single",
+                     params={"client": "gtx", "sl": "auto", "tl": "ko", "dt": "t", "q": text[:4500]},
+                     headers={"User-Agent": UA}, timeout=20)
+    r.raise_for_status()
+    return "".join(seg[0] for seg in r.json()[0] if seg and seg[0])
+
+
+def _tr_deep_google(text):
+    from deep_translator import GoogleTranslator
+    return GoogleTranslator(source="auto", target="ko").translate(text[:4500])
+
+
+def _tr_mymemory(text):
+    r = requests.get("https://api.mymemory.translated.net/get",
+                     params={"q": text[:480], "langpair": "en|ko"}, timeout=20)
+    r.raise_for_status()
+    return r.json()["responseData"]["translatedText"]
+
+
 def translate(text):
-    try:
-        from deep_translator import GoogleTranslator
-        return GoogleTranslator(source="auto", target="ko").translate(text[:4500])
-    except Exception as e:
-        log("  번역 실패(원문으로 보냄):", e)
-        return None
+    """무료 번역을 차례로 시도. 모두 실패하면 None(원문만 보냄)."""
+    for fn in (_tr_google_direct, _tr_deep_google, _tr_mymemory):
+        try:
+            out = fn(text)
+            if out and out.strip():
+                return out
+        except Exception as e:
+            log(f"  번역 실패({fn.__name__}):", str(e)[:150])
+    return None
 
 
 def find_channel(state):

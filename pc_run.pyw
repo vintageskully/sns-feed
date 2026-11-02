@@ -13,6 +13,21 @@ except OSError:
     pass
 sys.stdout = sys.stderr = open(log_path, "a", encoding="utf-8")
 print(f"\n===== {datetime.now():%Y-%m-%d %H:%M} =====", flush=True)
+
+# GitHub에서 최신 프로그램과 계정 목록 받아오기 (실패하면 있던 걸로 실행)
+RAW = "https://raw.githubusercontent.com/vintageskully/sns-feed/main/"
+for name in ("feed.py", "accounts_pc.txt"):
+    try:
+        import urllib.request
+        data = urllib.request.urlopen(RAW + name, timeout=20).read()
+        if name.endswith(".py"):
+            compile(data, name, "exec")  # 깨진 파일이면 교체 안 함
+        path = os.path.join(HERE, name)
+        if not os.path.exists(path) or open(path, "rb").read() != data:
+            open(path, "wb").write(data)
+            print("업데이트:", name)
+    except Exception as e:
+        print("업데이트 건너뜀:", name, e)
 try:
     sys.path.insert(0, HERE)
     import feed
