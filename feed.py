@@ -16,8 +16,19 @@ from email.utils import parsedate_to_datetime
 import requests
 
 KST = timezone(timedelta(hours=9))
-STATE_FILE = "state.json"
-ACCOUNTS_FILE = "accounts.txt"
+# 집 PC 모드: X만 따로 받음 (pc_setup.bat 이 PC_MODE=1 로 실행)
+PC_MODE = os.environ.get("PC_MODE") == "1"
+STATE_FILE = "state_pc.json" if PC_MODE else "state.json"
+ACCOUNTS_FILE = "accounts_pc.txt" if PC_MODE else "accounts.txt"
+X_PROFILE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "x_profile")
+PC_CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pc_config.json")
+if PC_MODE and os.path.exists(PC_CONFIG):
+    try:
+        _cfg = json.load(open(PC_CONFIG, encoding="utf-8"))
+        os.environ.setdefault("TELEGRAM_BOT_TOKEN", _cfg.get("token", ""))
+        os.environ.setdefault("TELEGRAM_CHAT_ID", str(_cfg.get("chat_id", "")))
+    except Exception:
+        pass
 MAX_AGE = timedelta(days=3)       # 이보다 오래된 글(고정 글 등)은 보내지 않음
 WARN_AFTER_FAILS = 6              # 연속 6번(약 3시간) 실패하면 텔레그램으로 알림
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -205,6 +216,14 @@ def find_channel(state):
     if state.get("chat_id"):
         TG_CHAT = state["chat_id"]
         return
+    if PC_MODE:
+        try:
+            TG_CHAT = json.load(open("state.json", encoding="utf-8")).get("chat_id", "")
+        except Exception:
+            pass
+        if TG_CHAT:
+            state["chat_id"] = TG_CHAT
+            return
     try:
         r = requests.get(f"https://api.telegram.org/bot{TG_TOKEN}/getUpdates",
                          params={"allowed_updates": json.dumps(
@@ -354,7 +373,7 @@ def extract_x(blobs, handle):
 
 
 def fetch_x(ctx, acc):
-    if not X_COOKIES:
+    if not X_COOKIES and not PC_MODE:
         # 로그인 없이 시도(최신 글이 안 나올 수 있음)
         r = requests.get("https://syndication.twitter.com/srv/timeline-profile/screen-name/"
                          + acc["handle"], headers={"User-Agent": UA}, timeout=30)
@@ -481,13 +500,13 @@ def fetch_facebook(ctx, acc):
     return list(posts.values())
 
 
-def send_digest(items, now):
+def send_digest(items, title):
     """밤사이 글을 시간순으로 묶어서, 텔레그램 길이 제한(4096자)에 맞게 나눠 보냄."""
     if not items:
         log("밤사이 새 글 없음")
         return
     items.sort(key=lambda ap: ap[1].get("ts") or 0)
-    head = f"🌙 밤사이 새 글 {len(items)}개 (어젯밤 11:30 ~ {now:%H:%M})"
+    head = f"{title} · {len(items)}개"
     sep = "\n\n━━━━━━━━━━\n\n"
     chunks, cur = [], head
     for i, (acc, post) in enumerate(items, 1):
@@ -527,8 +546,15 @@ def main():
     errors = []
     # 새벽 5시~7시 사이 그날 첫 실행이면 밤사이 글을 한 번에 묶어서 보냄
     today = now.strftime("%Y-%m-%d")
-    digest_mode = (5 <= now.hour < 7 and state.get("digest_date") != today
-                   and not backfill and not SEND_LATEST)
+    morning = 5 <= now.hour < 7 and state.get("digest_date") != today
+    last_run = state.get("last_run", 0)
+    was_off = PC_MODE and last_run and now.timestamp() - last_run > 90 * 60
+    digest_mode = (morning or was_off) and not backfill and not SEND_LATEST
+    if was_off and not morning:
+        digest_title = (f"💤 PC 꺼진 동안 새 글 "
+                        f"({datetime.fromtimestamp(last_run, KST):%m/%d %H:%M} ~ {now:%H:%M})")
+    else:
+        digest_title = f"🌙 밤사이 새 글 (어젯밤 11:30 ~ {now:%H:%M})"
     digest = []
 
     with sync_playwright() as p:
@@ -541,6 +567,11 @@ def main():
         ctxs = {}
 
         def ctx_for(platform):
+            if PC_MODE and platform == "x" and "x" not in ctxs:
+                ctxs["x"] = p.chromium.launch_persistent_context(
+                    X_PROFILE_DIR, headless=True, user_agent=UA, locale="ko-KR",
+                    timezone_id="Asia/Seoul", viewport={"width": 1280, "height": 900},
+                    args=launch_args)
             if platform not in ctxs:
                 c = browser.new_context(user_agent=UA, locale="ko-KR", timezone_id="Asia/Seoul",
                                         viewport={"width": 1280, "height": 900})
@@ -605,9 +636,11 @@ def main():
         browser.close()
 
     if digest_mode:
-        send_digest(digest, now)
-        state["digest_date"] = today
-        save_state(state)
+        send_digest(digest, digest_title)
+        if morning:
+            state["digest_date"] = today
+    state["last_run"] = int(now.timestamp())
+    save_state(state)
 
     if backfill:
         state["backfill_done"] = backfill[0]
@@ -624,5 +657,29 @@ def main():
         tg_send("\n".join(lines))
 
 
+def pc_login():
+    """처음 한 번: 창을 띄워 X에 직접 로그인. 로그인 정보는 x_profile 폴더에 저장."""
+    from playwright.sync_api import sync_playwright
+    with sync_playwright() as p:
+        ctx = p.chromium.launch_persistent_context(X_PROFILE_DIR, headless=False,
+                                                   viewport={"width": 1100, "height": 850})
+        page = ctx.pages[0] if ctx.pages else ctx.new_page()
+        page.goto("https://x.com/login")
+        print("\n열린 창에서 X에 로그인하세요. 로그인이 끝나면 그 창을 닫으면 됩니다.")
+        try:
+            while ctx.pages:
+                ctx.pages[0].wait_for_timeout(1000)
+        except Exception:
+            pass
+        try:
+            ctx.close()
+        except Exception:
+            pass
+    print("X 로그인 저장 완료")
+
+
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1 and sys.argv[1] == "login":
+        pc_login()
+    else:
+        main()

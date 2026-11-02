@@ -1,1 +1,6 @@
 __pycache__/
+pc_config.json
+state_pc.json
+x_profile/
+pc_log.txt
+pc_log.txt.old
