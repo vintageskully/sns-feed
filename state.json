@@ -11,7 +11,7 @@
   "threads:dontstopinvest": 0,
   "threads:eunice_bbu": 0,
   "threads:fit.ttok": 0,
-  "threads:ji_ni_su_": 45,
+  "threads:ji_ni_su_": 46,
   "threads:jkimmorgan": 0,
   "threads:joo___wol2": 0,
   "threads:jwlee090": 0,
@@ -21,7 +21,7 @@
   "threads:raimund_korea": 0,
   "threads:thebeekeep_er": 0,
   "threads:trader_coink": 0,
-  "threads:trader_yul": 0,
+  "threads:trader_yul": 1,
   "threads:withyoori": 0,
   "threads:writer92tothemoney": 0,
   "threads:yu_dong7": 0,
@@ -34,7 +34,8 @@
   "x:monsterstocks1": 7
  },
  "last_error": {
-  "threads:ji_ni_su_": "11/08 07:02 글을 찾지 못함(페이지 구조 변경 또는 차단)",
+  "threads:ji_ni_su_": "11/08 07:36 글을 찾지 못함(페이지 구조 변경 또는 차단)",
+  "threads:trader_yul": "11/08 07:36 글을 찾지 못함(페이지 구조 변경 또는 차단)",
   "x:DanZanger": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:MarkRitchie_II": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:ReturnDriver": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
@@ -43,7 +44,7 @@
   "x:markminervini": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:monsterstocks1": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]"
  },
- "last_run": 1794088957,
+ "last_run": 1794091015,
  "seen": {
   "facebook:100012191809083": [
    "1774135789669464",
@@ -584,7 +585,8 @@
    "4024990644798830346",
    "4025019926837327468",
    "4025080263393486761",
-   "4025082544742533667"
+   "4025082544742533667",
+   "4025444285200571383"
   ],
   "threads:jwlee090": [
    "3712690789014401023",
@@ -635,7 +637,8 @@
    "4022543086248994113",
    "4022973823888610094",
    "4024764635802438439",
-   "4025177852777318673"
+   "4025177852777318673",
+   "4025445037215255652"
   ],
   "threads:peterleejoa": [
    "3929818639021249368",
