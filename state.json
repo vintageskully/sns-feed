@@ -4,12 +4,12 @@
  "digest_date": "2026-11-26",
  "fails": {
   "facebook:100012191809083": 0,
-  "facebook:huckjin.kwon": 1,
-  "facebook:jiho.yoon.7547": 1,
+  "facebook:huckjin.kwon": 0,
+  "facebook:jiho.yoon.7547": 0,
   "threads:amisyoori": 0,
   "threads:bae_ma100": 0,
   "threads:big_t_story": 0,
-  "threads:cold_hedge__": 20,
+  "threads:cold_hedge__": 21,
   "threads:dokiusstock": 0,
   "threads:dontstopinvest": 0,
   "threads:dreaming_buffett": 0,
@@ -21,9 +21,9 @@
   "threads:growth_papa": 0,
   "threads:gten_btc": 0,
   "threads:heejinson87": 0,
-  "threads:ji_ni_su_": 355,
+  "threads:ji_ni_su_": 356,
   "threads:jkimmorgan": 0,
-  "threads:jntrdr": 16,
+  "threads:jntrdr": 17,
   "threads:joo___wol2": 0,
   "threads:jwlee090": 0,
   "threads:kurtsaltrichter": 0,
@@ -51,11 +51,9 @@
   "x:monsterstocks1": 7
  },
  "last_error": {
-  "facebook:huckjin.kwon": "11/26 13:40 페이스북 로그인 풀림/보안확인 — FB_COOKIES 다시 등록 필요",
-  "facebook:jiho.yoon.7547": "11/26 13:40 페이스북 로그인 풀림/보안확인 — FB_COOKIES 다시 등록 필요",
-  "threads:cold_hedge__": "11/26 13:40 글을 찾지 못함(페이지 구조 변경 또는 차단)",
-  "threads:ji_ni_su_": "11/26 13:40 글을 찾지 못함(페이지 구조 변경 또는 차단)",
-  "threads:jntrdr": "11/26 13:40 글을 찾지 못함(페이지 구조 변경 또는 차단)",
+  "threads:cold_hedge__": "11/26 14:57 글을 찾지 못함(페이지 구조 변경 또는 차단)",
+  "threads:ji_ni_su_": "11/26 14:57 글을 찾지 못함(페이지 구조 변경 또는 차단)",
+  "threads:jntrdr": "11/26 14:57 글을 찾지 못함(페이지 구조 변경 또는 차단)",
   "x:DanZanger": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:MarkRitchie_II": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:ReturnDriver": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
@@ -64,7 +62,7 @@
   "x:markminervini": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:monsterstocks1": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]"
  },
- "last_run": 1795668024,
+ "last_run": 1795672633,
  "seen": {
   "facebook:100012191809083": [
    "1774135789669464",
@@ -149,7 +147,8 @@
    "2724721457944221",
    "2724963434586690",
    "2725909211158779",
-   "2726653321084368"
+   "2726653321084368",
+   "2727283241021376"
   ],
   "facebook:huckjin.kwon": [
    "25322468414105753",
@@ -2320,7 +2319,9 @@
    "4038072704158568258",
    "4038512043711691060",
    "4038512582755258332",
-   "4038522770694530947"
+   "4038522770694530947",
+   "4038702832392312304",
+   "4038703092304956715"
   ],
   "threads:physi0.trader": [
    "4034581390229991034",
@@ -3305,7 +3306,9 @@
    "4038597956866227464",
    "4038613125645119267",
    "4038635644776456591",
-   "4038658359163989725"
+   "4038658359163989725",
+   "4038680899882172996",
+   "4038703672845606300"
   ],
   "threads:uptrendfollower": [
    "3987524990480433115",
