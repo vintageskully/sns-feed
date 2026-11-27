@@ -4,15 +4,15 @@
  "digest_date": "2026-11-28",
  "fails": {
   "facebook:100012191809083": 0,
-  "facebook:huckjin.kwon": 1,
-  "facebook:jiho.yoon.7547": 1,
+  "facebook:huckjin.kwon": 0,
+  "facebook:jiho.yoon.7547": 0,
   "threads:amisyoori": 0,
   "threads:bae_ma100": 0,
   "threads:big_t_story": 0,
   "threads:cold_hedge__": 0,
   "threads:dokiusstock": 0,
   "threads:dontstopinvest": 13,
-  "threads:dontstopinvestingok": 5,
+  "threads:dontstopinvestingok": 6,
   "threads:dreaming_buffett": 0,
   "threads:eunice_bbu": 0,
   "threads:fit.ttok": 0,
@@ -22,9 +22,9 @@
   "threads:growth_papa": 0,
   "threads:gten_btc": 0,
   "threads:heejinson87": 0,
-  "threads:ji_ni_su_": 380,
+  "threads:ji_ni_su_": 381,
   "threads:jkimmorgan": 0,
-  "threads:jntrdr": 40,
+  "threads:jntrdr": 41,
   "threads:joo___wol2": 0,
   "threads:jwlee090": 0,
   "threads:kurtsaltrichter": 0,
@@ -52,12 +52,10 @@
   "x:monsterstocks1": 7
  },
  "last_error": {
-  "facebook:huckjin.kwon": "11/28 07:49 페이스북 로그인 풀림/보안확인 — FB_COOKIES 다시 등록 필요",
-  "facebook:jiho.yoon.7547": "11/28 07:49 페이스북 로그인 풀림/보안확인 — FB_COOKIES 다시 등록 필요",
   "threads:dontstopinvest": "11/27 19:55 글을 찾지 못함(페이지 구조 변경 또는 차단)",
-  "threads:dontstopinvestingok": "11/28 07:49 글을 찾지 못함(페이지 구조 변경 또는 차단)",
-  "threads:ji_ni_su_": "11/28 07:49 글을 찾지 못함(페이지 구조 변경 또는 차단)",
-  "threads:jntrdr": "11/28 07:49 글을 찾지 못함(페이지 구조 변경 또는 차단)",
+  "threads:dontstopinvestingok": "11/28 08:45 글을 찾지 못함(페이지 구조 변경 또는 차단)",
+  "threads:ji_ni_su_": "11/28 08:45 글을 찾지 못함(페이지 구조 변경 또는 차단)",
+  "threads:jntrdr": "11/28 08:45 글을 찾지 못함(페이지 구조 변경 또는 차단)",
   "x:DanZanger": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:MarkRitchie_II": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:ReturnDriver": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
@@ -66,7 +64,7 @@
   "x:markminervini": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:monsterstocks1": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]"
  },
- "last_run": 1795819742,
+ "last_run": 1795823103,
  "seen": {
   "facebook:100012191809083": [
    "1774135789669464",
@@ -802,7 +800,8 @@
    "4039889212576857039",
    "4039890849135533935",
    "4039916346208939953",
-   "4039919327721530495"
+   "4039919327721530495",
+   "4039979472052798653"
   ],
   "threads:dokiusstock": [
    "4018418285313921774",
@@ -1066,7 +1065,8 @@
    "4039679729774768269",
    "4039679730219392606",
    "4039719690922242124",
-   "4039736407673185171"
+   "4039736407673185171",
+   "4039977978989553959"
   ],
   "threads:dontstopinvest": [
    "3851707441143333730",
@@ -2225,7 +2225,8 @@
    "4039427508171526286",
    "4039557936169733465",
    "4039558626745115554",
-   "4039945253971652555"
+   "4039945253971652555",
+   "4039979541031129342"
   ],
   "threads:jwlee090": [
    "3712690789014401023",
@@ -2322,7 +2323,8 @@
    "4039792735179677219",
    "4039822946030237310",
    "4039893930154882642",
-   "4039948757912191635"
+   "4039948757912191635",
+   "4039958818486732576"
   ],
   "threads:mr_mam_stock": [
    "4013360371201161554",
@@ -3562,7 +3564,8 @@
    "4039878753476316017",
    "4039904071276335654",
    "4039926692139524622",
-   "4039949321407401468"
+   "4039949321407401468",
+   "4039972032524060655"
   ],
   "threads:uptrendfollower": [
    "3987524990480433115",
@@ -4190,6 +4193,7 @@
  },
  "warned": {
   "threads:dontstopinvest": true,
+  "threads:dontstopinvestingok": true,
   "threads:ji_ni_su_": true,
   "threads:jntrdr": true,
   "x:DanZanger": true,
