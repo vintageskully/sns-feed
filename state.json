@@ -11,7 +11,7 @@
   "threads:big_t_story": 0,
   "threads:cold_hedge__": 0,
   "threads:dokiusstock": 0,
-  "threads:dontstopinvest": 9,
+  "threads:dontstopinvest": 10,
   "threads:dreaming_buffett": 0,
   "threads:eunice_bbu": 0,
   "threads:fit.ttok": 0,
@@ -21,7 +21,7 @@
   "threads:growth_papa": 0,
   "threads:gten_btc": 0,
   "threads:heejinson87": 0,
-  "threads:ji_ni_su_": 371,
+  "threads:ji_ni_su_": 372,
   "threads:jkimmorgan": 0,
   "threads:jntrdr": 32,
   "threads:joo___wol2": 0,
@@ -51,8 +51,8 @@
   "x:monsterstocks1": 7
  },
  "last_error": {
-  "threads:dontstopinvest": "11/27 15:00 글을 찾지 못함(페이지 구조 변경 또는 차단)",
-  "threads:ji_ni_su_": "11/27 15:00 글을 찾지 못함(페이지 구조 변경 또는 차단)",
+  "threads:dontstopinvest": "11/27 16:15 글을 찾지 못함(페이지 구조 변경 또는 차단)",
+  "threads:ji_ni_su_": "11/27 16:15 글을 찾지 못함(페이지 구조 변경 또는 차단)",
   "threads:jntrdr": "11/27 15:00 글을 찾지 못함(페이지 구조 변경 또는 차단)",
   "x:DanZanger": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:MarkRitchie_II": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
@@ -1847,7 +1847,8 @@
    "4038098875114028732",
    "4038155834274024334",
    "4038156297761405591",
-   "4038828060073746443"
+   "4038828060073746443",
+   "4039481015814828974"
   ],
   "threads:jntrdr": [
    "3627405459167716811",
@@ -2629,7 +2630,8 @@
    "4039355116331984448",
    "4039357328793778890",
    "4039360820727996439",
-   "4039386165321646874"
+   "4039386165321646874",
+   "4039468344890311118"
   ],
   "threads:sumisland": [
    "3497561505238217962",
