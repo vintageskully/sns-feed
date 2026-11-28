@@ -12,7 +12,7 @@
   "threads:cold_hedge__": 0,
   "threads:dokiusstock": 0,
   "threads:dontstopinvest": 13,
-  "threads:dontstopinvestingok": 15,
+  "threads:dontstopinvestingok": 16,
   "threads:dreaming_buffett": 0,
   "threads:eunice_bbu": 0,
   "threads:fit.ttok": 0,
@@ -22,9 +22,9 @@
   "threads:growth_papa": 0,
   "threads:gten_btc": 0,
   "threads:heejinson87": 0,
-  "threads:ji_ni_su_": 390,
+  "threads:ji_ni_su_": 391,
   "threads:jkimmorgan": 0,
-  "threads:jntrdr": 50,
+  "threads:jntrdr": 51,
   "threads:joo___wol2": 0,
   "threads:jwlee090": 0,
   "threads:kurtsaltrichter": 0,
@@ -53,9 +53,9 @@
  },
  "last_error": {
   "threads:dontstopinvest": "11/27 19:55 글을 찾지 못함(페이지 구조 변경 또는 차단)",
-  "threads:dontstopinvestingok": "11/28 18:48 글을 찾지 못함(페이지 구조 변경 또는 차단)",
-  "threads:ji_ni_su_": "11/28 18:48 글을 찾지 못함(페이지 구조 변경 또는 차단)",
-  "threads:jntrdr": "11/28 18:48 글을 찾지 못함(페이지 구조 변경 또는 차단)",
+  "threads:dontstopinvestingok": "11/28 19:48 글을 찾지 못함(페이지 구조 변경 또는 차단)",
+  "threads:ji_ni_su_": "11/28 19:48 글을 찾지 못함(페이지 구조 변경 또는 차단)",
+  "threads:jntrdr": "11/28 19:48 글을 찾지 못함(페이지 구조 변경 또는 차단)",
   "x:DanZanger": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:MarkRitchie_II": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:ReturnDriver": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
@@ -64,7 +64,7 @@
   "x:markminervini": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]",
   "x:monsterstocks1": "11/02 19:03 글을 찾지 못함 [제목:잠시만 기다리십시오… / 응답:없음 / 화면글:0]"
  },
- "last_run": 1795859303,
+ "last_run": 1795862886,
  "seen": {
   "facebook:100012191809083": [
    "1774135789669464",
@@ -1607,7 +1607,8 @@
    "4038654921972739968",
    "4039537735194706950",
    "4039582979017744414",
-   "4040161571207952766"
+   "4040161571207952766",
+   "4040288852010676159"
   ],
   "threads:gten_btc": [
    "3867660199967888050",
